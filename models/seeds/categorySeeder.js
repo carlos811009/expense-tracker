@@ -7,23 +7,23 @@ mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true,
 const categorySeedData = [
   {
     id: 0,
-    icon: '<i class="fas fa-home"></i>'
+    icon: 'fa-home'
   },
   {
     id: 1,
-    icon: '<i class="fas fa-shuttle-van"></i>'
+    icon: 'fa-shuttle-van'
   },
   {
     id: 2,
-    icon: '<i class="fas fa-grin-beam"></i>'
+    icon: 'fa-grin-beam'
   },
   {
     id: 3,
-    icon: '<i class="fas fa-utensils"></i>'
+    icon: 'fa-utensils'
   },
   {
     id: 4,
-    icon: '<i class="fas fa-pen"></i>'
+    icon: 'fa-pen'
   }
 ]
 
@@ -38,6 +38,5 @@ db.on('open', () => {
       db.close()
     }).then(() => {
       console.log('category is done')
-      process.exit()
     })
 })

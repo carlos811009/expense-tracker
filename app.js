@@ -3,9 +3,13 @@ const port = 3000
 const app = express()
 const exphbs = require('express-handlebars')
 
+
+
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
+
+const Records = require('./models/Record')
 
 db.on('error', () => {
   console.log('mongodb error')
@@ -29,13 +33,19 @@ app.get('/expense/add', (req, res) => {
   res.render('create')
 })
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
 
 app.post('/expense/add', (req, res) => {
   res.render('create')
 })
+
+app.get('/', (req, res) => {
+  Records.find({})
+    .lean()
+    .then((record) => res.render('index', { record }))
+  // res.render('index')
+
+})
+
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`)
