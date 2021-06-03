@@ -1,0 +1,54 @@
+.form-container {
+  border-radius: 8px;
+  width:420px;
+  min-height: 90vw;
+  margin:0 auto;
+  text-align: center;
+  border: 1px solid rgba(236,235,235,0.5);
+  box-shadow: 0px 0px 4px 1px rgba(230, 228, 228, 0.5);
+  padding-bottom: 20px;
+  
+}
+
+
+.create-page-title {
+  font-size: larger;
+  text-align: center;
+  
+}
+.cost-container {
+  width:90%;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.cost-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+#number {
+  margin: auto 0;
+}
+
+.date {
+  width:90%;
+  margin : 0 auto 20px;
+}
+
+#meeting-time {
+  width:282px;
+}
+
+.form-group {
+  margin: 0 auto 20px;
+  width:90%;
+}
+
+.input-name {
+  padding: 0 0 ;
+}
+
+.createBtn {
+  width:100px;
+}

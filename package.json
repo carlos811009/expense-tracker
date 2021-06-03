@@ -12,11 +12,14 @@
   "name": "expense-tracker",
   "version": "1.0.0",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "standard": "^16.0.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seed": "node ./models/seeds/categorySeeder.js && node ./models/seeds/recordSeeder.js"
   },
   "keywords": [],
   "author": "",
