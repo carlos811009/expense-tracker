@@ -18,8 +18,11 @@
 }
 .cost-container {
   width:90%;
-  height: 80px;
-  margin: 0 auto;
+  margin: 20px auto;
+}
+
+.cost-amount{
+  font-size:40px
 }
 
 .cost-title {

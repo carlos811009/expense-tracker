@@ -1,9 +1,9 @@
 <div class="create-page-title mt-3 dark-style">新增收支紀錄</div>
 <div class="card-container ">
   <form action="/expense/add" class="dark-style form-container" method="post">
-    <div class="cost-container row dark-style ">
-      <div class="cost-title col-3"> 金額：</div>
-      <input id="number" type="number" class="amount col-9" value=0 min=0 required>
+    <div class="cost-container row mt-3 dark-style ">
+      <div class="cost-title col-3 "> 金額：</div>
+      <input id="cash" name="cash" type="number" class="cost-amount col-9" value=0 min=0 required>
     </div>
 
     <div class="date row">
@@ -13,7 +13,7 @@
 
     <div class="form-group row">
       <label for="category" class="col-3 select-category ">類別</label>
-      <select id="category" class="form-control col-9">
+      <select id="category" class="form-control col-9" name="category">
         <option selected>Choose...</option>
         <option>...</option>
       </select>
@@ -21,7 +21,7 @@
     <div class="form-group row">
       <label for="name" class="col-3 col-form-label">名稱</label>
       <div class=" input-name col-9">
-        <input type="text" class="form-control" id="name" placeholder="輸入名稱">
+        <input type="text" class="form-control" id="name" name="name" placeholder="輸入名稱">
       </div>
     </div>
     <div class="btn-group row">

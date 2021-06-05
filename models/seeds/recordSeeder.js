@@ -9,31 +9,31 @@ const recordSeedData = [
   {
     icon_id: 0,
     item: "日常用品",
-    date: 2012 / 02 / 23,
+    date: "2012 / 02 / 23",
     amount: 60,
   },
   {
     icon_id: 1,
     item: '午餐',
-    date: 2012 / 03 / 23,
+    date: "2012 / 03 / 23",
     amount: 60,
   },
   {
     icon_id: 2,
     item: '火車',
-    date: 2012 / 03 / 23,
+    date: "2012 / 03 / 23",
     amount: 60,
   },
   {
     icon_id: 3,
     item: '看電影',
-    date: 2012 / 03 / 23,
+    date: "2012 / 03 / 23",
     amount: 120,
   },
   {
     icon_id: 4,
     item: '雜記',
-    date: 2012 / 03 / 23,
+    date: "2012 / 03 / 23",
     amount: 60,
   },
 ]
