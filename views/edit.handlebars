@@ -1,7 +1,7 @@
 <div class="create-page-title mt-3 dark-style">新增收支紀錄</div>
 
 <div class="card-container ">
-  <form action="/expense/{{record._id}}/edit" class="dark-style form-container" method="post">
+  <form action="/expense/{{record._id}}?_method=PUT" class="dark-style form-container" method="post">
     <div class="cost-container row mt-3 dark-style ">
       <div class="cost-title col-3 "> 金額：</div>
       <input id="amount" name="amount" type="number" class="cost-amount col-9" value={{record.amount}} min=0 required>

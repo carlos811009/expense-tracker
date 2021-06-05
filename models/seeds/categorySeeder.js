@@ -34,6 +34,7 @@ const categorySeedData = [
 
 db.on('error', () => {
   console.log('mongodb error')
+  process.exit()
 })
 
 db.on('open', () => {

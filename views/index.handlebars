@@ -41,7 +41,7 @@
             <a class="edit mr-2" href="/expense/{{this._id}}/edit">
               <i class="fas fa-edit"></i>
             </a>
-            <form action="/expense/{{this._id}}/delete" class="delete" method="post">
+            <form action="/expense/{{this._id}}?_method=DELETE" class="delete" method="post">
               <button type="submit" class="deleteBtn dark-style"><i class="fas fa-trash-alt"></i></button>
             </form>
           </div>

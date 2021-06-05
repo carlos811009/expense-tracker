@@ -42,6 +42,7 @@ const recordSeedData = [
 
 db.on('error', () => {
   console.log('mongodb error')
+  process.exit()
 })
 
 db.once('open', () => {

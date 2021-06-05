@@ -2,8 +2,7 @@ const express = require('express')
 const port = 3000
 const app = express()
 const exphbs = require('express-handlebars')
-const bodyParser = require('body-parser')
-
+const methodOverride = require('method-override')
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,8 +21,8 @@ db.once('open', () => {
 
 //要連結本地css一定要設定這個，此外已經設定為public資料夾，所以路徑從/stylesheets開始即可
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: true }))
-
+app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', "handlebars")
 
@@ -90,7 +89,7 @@ app.post('/expense/add', (req, res) => {
     })
 })
 
-app.post('/expense/:id/edit', (req, res) => {
+app.put('/expense/:id', (req, res) => {
   let { amount, meeting_time, item, category
   } = req.body
   amount = Number(amount)
@@ -115,7 +114,7 @@ app.post('/expense/:id/edit', (req, res) => {
     .then(() => res.redirect('/'))
 })
 
-app.post('/expense/:id/delete', (req, res) => {
+app.delete('/expense/:id', (req, res) => {
   const _id = req.params.id
   Records.findById(_id)
     .then((record) => record.remove())
