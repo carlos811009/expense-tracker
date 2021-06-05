@@ -113,9 +113,15 @@ app.post('/expense/:id/edit', (req, res) => {
         .catch(err => console.log(err))
     })
     .then(() => res.redirect('/'))
-
 })
 
+app.post('/expense/:id/delete', (req, res) => {
+  const _id = req.params.id
+  Records.findById(_id)
+    .then((record) => record.remove())
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`)

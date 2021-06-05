@@ -5,11 +5,13 @@ const Categories = require('../Category')
 
 mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
 
+
+
 const recordSeedData = [
   {
     icon_id: 0,
     item: "日常用品",
-    date: "2012 / 02 / 23",
+    date: "2012 / 03 / 23",
     amount: 60,
   },
   {
