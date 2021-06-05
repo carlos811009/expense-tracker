@@ -70,13 +70,20 @@ app.post('/expense/add', (req, res) => {
   const { amount, meeting_time, item, category
   } = req.body
   const icon_id = Number(category)
+  const id = icon_id
   const date = String(meeting_time)
   console.log(req.body)
   console.log(icon_id)
+  Categories.findOne({ id })
+    .then(category => {
+      const icon = category.icon
+      Records.create({ amount, date, item, icon_id, icon })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+    })
 
-  Records.create({ amount, date, item, icon_id })
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+
+
 })
 
 
