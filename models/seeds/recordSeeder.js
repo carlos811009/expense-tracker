@@ -1,11 +1,6 @@
-const mongoose = require('mongoose')
+const db = require('../../config/mongoose')
 const Records = require('../Record')
-const db = mongoose.connection
 const Categories = require('../Category')
-
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
-
-
 
 const recordSeedData = [
   {

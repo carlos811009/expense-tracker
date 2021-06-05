@@ -7,10 +7,9 @@ const methodOverride = require('method-override')
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
 
+const db = require('./config/mongoose')
 
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
+
 
 const Records = require('./models/Record')
 const Categories = require('./models/Category')
