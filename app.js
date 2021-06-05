@@ -32,7 +32,12 @@ app.get('/expense/edit', (req, res) => {
 })
 
 app.get('/expense/add', (req, res) => {
-  res.render('create')
+  Categories.find()
+    .lean()
+    .then(categories => {
+      res.render('create', { category: categories })
+    })
+
 })
 
 
@@ -59,9 +64,19 @@ app.get('/', (req, res) => {
 })
 
 
+
+
 app.post('/expense/add', (req, res) => {
+  const { amount, meeting_time, item, category
+  } = req.body
+  const icon_id = Number(category)
+  const date = String(meeting_time)
   console.log(req.body)
-  res.render('create')
+  console.log(icon_id)
+
+  Records.create({ amount, date, item, icon_id })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
 
 
