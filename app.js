@@ -27,8 +27,20 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', "handlebars")
 
-app.get('/expense/edit', (req, res) => {
-  res.render('edit')
+app.get('/expense/:id/edit', (req, res) => {
+  const _id = req.params.id
+  Records.findById(_id)
+    .lean()
+    .then((record) => {
+      Categories.find()
+        .lean()
+        .then(categories => {
+          res.render('edit', { record, category: categories })
+        })
+
+    })
+    .catch(err => console.log(err))
+
 })
 
 app.get('/expense/add', (req, res) => {
@@ -63,17 +75,12 @@ app.get('/', (req, res) => {
 
 })
 
-
-
-
 app.post('/expense/add', (req, res) => {
   const { amount, meeting_time, item, category
   } = req.body
   const icon_id = Number(category)
   const id = icon_id
   const date = String(meeting_time)
-  console.log(req.body)
-  console.log(icon_id)
   Categories.findOne({ id })
     .then(category => {
       const icon = category.icon
@@ -81,8 +88,31 @@ app.post('/expense/add', (req, res) => {
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
     })
+})
 
-
+app.post('/expense/:id/edit', (req, res) => {
+  let { amount, meeting_time, item, category
+  } = req.body
+  amount = Number(amount)
+  const icon_id = Number(category)
+  const id = icon_id
+  const _id = req.params.id
+  const date = String(meeting_time)
+  Categories.findOne({ id })
+    .then(category => {
+      const icon = category.icon
+      Records.findById(_id)
+        .then(record => {
+          record.amount = amount
+          record.date = date
+          record.icon_id = icon_id
+          record.icon = icon
+          record.item = item
+          record.save()
+        })
+        .catch(err => console.log(err))
+    })
+    .then(() => res.redirect('/'))
 
 })
 

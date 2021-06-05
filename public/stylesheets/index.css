@@ -114,3 +114,11 @@ ul{
   display: flex;
   align-items: center;
 }
+
+.deleteBtn {
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent; 
+  outline: none;
+  background-color: Transparent;
+}

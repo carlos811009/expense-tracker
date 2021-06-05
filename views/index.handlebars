@@ -38,15 +38,15 @@
           </div>
           <div class="cash col-2">{{this.amount}}</div>
           <div class="feature-btn col-2">
-            <a class="edit mr-2" href="/expense/edit">
+            <a class="edit mr-2" href="/expense/{{this._id}}/edit">
               <i class="fas fa-edit"></i>
             </a>
-            <div cless="delete">
-              <i class="fas fa-trash-alt"></i>
-            </div>
+            <from action="/expense/{{this._id}}/delete" cless="delete">
+              <button type="submit" class="deleteBtn dark-style"><i class="fas fa-trash-alt"></i></button>
+            </from>
           </div>
-
           <div class='info-data'>{{this.date}}</div>
+
         </div>
       </li>
       {{/each}}

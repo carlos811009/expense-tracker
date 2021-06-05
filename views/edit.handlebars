@@ -1,10 +1,41 @@
-<div class="card-container ">
-  <div class="container">
-    <form action="/expense/edit" method="post">
+<div class="create-page-title mt-3 dark-style">新增收支紀錄</div>
 
-      <div class="save-item m-0">
-        <button type="submit" class="btn btn-warning create-btn">儲存</button>
+<div class="card-container ">
+  <form action="/expense/{{record._id}}/edit" class="dark-style form-container" method="post">
+    <div class="cost-container row mt-3 dark-style ">
+      <div class="cost-title col-3 "> 金額：</div>
+      <input id="amount" name="amount" type="number" class="cost-amount col-9" value={{record.amount}} min=0 required>
+    </div>
+
+    <div class="date row">
+      <label for="meeting-time" class="col-3">日期</label>
+      <input type="datetime-local" id="meeting_time" name="meeting_time" value={{record.date}} required>
+    </div>
+
+    <div class=" form-group row">
+      <label for="category" class="col-3 select-category ">類別</label>
+      <select id="category" class="form-control col-9" name="category" required>
+        {{#each category}}
+        <option value={{this.id}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group row">
+      <label for="name" class="col-3 col-form-label">項目</label>
+      <div class=" input-name col-9">
+        <input type="text" class="form-control" id="item" name="item" placeholder="輸入名稱" value={{record.item}} required>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="btn-group row">
+      <div class="col-6">
+        <button type="submit" class="btn btn-warning editBtn">確認
+        </button>
+      </div>
+      <div class="col-6">
+        <a href="/" class="btn btn-secondary cancelBtn">
+          取消
+        </a>
+      </div>
+    </div>
+  </form>
 </div>
