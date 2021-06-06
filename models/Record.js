@@ -28,6 +28,12 @@ const RecordSchema = new Schema({
   },
   indexBoolean: {
     type: Boolean,
+  },
+  location: {
+    type: String,
+  },
+  icon_name: {
+    type: String,
   }
 })
 

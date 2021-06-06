@@ -1,25 +1,24 @@
 <div class="card-container ">
   <div class="container">
-    <from class="group mt-3 ">
+    <form action="/expense/search" class="group mt-3" method="POST">
       <div class="form-group">
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option selected>月份</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option selected>類別</option>
-          {{#each category}}
-          <option>{{this.name}}</option>
+        <select class="form-control select_month" name="month" id="exampleFormControlSelect1" onchange="submit()">
+          <option value=''>月份</option>
+          {{#each month}}
+          <option value={{this.id}}>{{this.month}}</option>
+
           {{/each}}
         </select>
       </div>
-    </from>
+      <div class="form-group">
+        <select class="form-control select_category" id="exampleFormControlSelect1" name="category" onchange="submit()">
+          <option value=''>類別</option>
+          {{#each category}}
+          <option value={{this.id}}>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
     <div class="totalamount m-1 mb-3 dark-style ">
       <div class="totalamount-title"> 總金額：</div>
       <div class="amount">0</div>
@@ -28,13 +27,17 @@
       <button type="button" class="btn btn-warning create-btn">記帳囉</button>
     </a>
     <ul class="item-group px-0 dark-style">
-      {{#each records}}
 
+      {{#each records}}
       <li class="item light-item {{#unless this.indexBoolean}}dark-item{{/unless}} my-3 ">
         <div class="item-container row">
           <div class="item-info col-8 mt-1 row ">
             <i class="fas {{this.icon}} col-1"></i>
-            <div class="category col-8">{{this.item}}</div>
+            <div class="category col-5">{{this.item}}</div>
+            {{#if this.location}}
+            <i class="fas fa-map-marker-alt mr-1"></i>
+            {{this.location}}
+            {{/if}}
           </div>
           <div class="cash col-2">{{this.amount}}</div>
           <div class="feature-btn col-2">
