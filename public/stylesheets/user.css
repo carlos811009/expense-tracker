@@ -1,0 +1,49 @@
+
+
+h2 {
+  text-align: center;
+}
+.register_confirmPassword,
+.register_name {
+  width: 89%;
+  margin:0px auto;
+}
+
+.facebookBtn,
+.loginBtn,
+.login-form-group {
+  width: 80%;
+  margin:0px auto;
+}
+
+
+label{
+  font-size: 15px;
+  font-weight: bolder;
+  width: 350px;
+  text-align: left;
+}
+
+.name,
+.confirmPassword {
+  font-size: 15px;
+  font-weight: bolder;
+  width: 330px;
+  text-align: left;
+}
+
+.btn_contaioner {
+  width:80%;
+  display: flex;
+  margin: 0px auto;
+  padding: 20px 0px;
+  justify-content: space-around;
+  
+}
+
+.facebookBtn_register,
+.cancelBtn_register {
+  width:45%;
+  height: 40px;
+  margin: 0px 0px;
+}

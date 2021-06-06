@@ -100,10 +100,6 @@ router.post('/add', (req, res) => {
 })
 
 router.post('/search', (req, res) => {
-  console.log('params', req.params)
-  console.log('body', req.body)
-  console.log('query', req.query)
-  console.log('------------------')
   const searchCategory = Number(req.body.category)
   const searchMonth = Number(req.body.month)
   let selectData = []
