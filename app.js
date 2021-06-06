@@ -1,14 +1,13 @@
 const express = require('express')
 const session = require('express-session')
-const port = process.env.PORT || 3000
 const app = express()
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const port = process.env.PORT
 
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
