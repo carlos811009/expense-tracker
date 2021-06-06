@@ -4,21 +4,22 @@
     <div class="form-group my-3">
       <label for="name" class="name">綽號</label>
       <input type="text" id="name" name="name" class="form-control register_name" placeholder="Enter Name"
-        value={{name}}>
+        value="{{name}}" required>
     </div>
     <div class="login-form-group mb-3">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value={{email}}>
+      <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="{{email}}"
+        required>
     </div>
     <div class="login-form-group mb-3">
       <label for="password">Password</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
-        value={{password}}>
+        value="{{password}}" required>
     </div>
     <div class="form-group mb-3">
       <label for="confirmPassword" class="confirmPassword">Confirm Password</label>
       <input type="password" id="confirmPassword" name="confirmPassword" class="form-control register_confirmPassword"
-        placeholder="Confirm Password" value={{confirmPassword}}>
+        placeholder="Confirm Password" value="{{confirmPassword}}" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block loginBtn mt-4">確認註冊</button>
     <div class="btn_contaioner">

@@ -58,7 +58,8 @@ const month = [
 router.use(express.urlencoded({ extended: true }))
 
 router.get('/', (req, res) => {
-  Records.find({})
+  const userId = req.user._id
+  Records.find({ userId })
     .sort({ date: 'desc' })
     .lean()
     .then((records) => {
@@ -75,7 +76,6 @@ router.get('/', (req, res) => {
         })
 
     })
-  // res.render('index')
 })
 
 module.exports = router

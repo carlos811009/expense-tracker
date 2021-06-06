@@ -56,7 +56,7 @@ const month = [
 router.use(express.urlencoded({ extended: true }))
 router.get('/:id/edit', (req, res) => {
   const _id = req.params.id
-  Records.findById(_id)
+  Records.findById({ _id })
     .lean()
     .then((record) => {
       Categories.find()
@@ -86,13 +86,14 @@ router.post('/add', (req, res) => {
   const icon_id = Number(category)
   const id = icon_id
   const date = String(meeting_time)
+  const userId = req.user._id
   if (!location) {
     location = ''
   }
   Categories.findOne({ id })
     .then(category => {
       const icon = category.icon
-      Records.create({ amount, date, item, icon_id, icon, location })
+      Records.create({ amount, date, item, icon_id, icon, location, userId })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
 
@@ -102,8 +103,9 @@ router.post('/add', (req, res) => {
 router.post('/search', (req, res) => {
   const searchCategory = Number(req.body.category)
   const searchMonth = Number(req.body.month)
+  const userId = req.user._id
   let selectData = []
-  Records.find()
+  Records.find({ userId })
     .lean()
     .then(records => {
       return selectData = records.filter(record => {

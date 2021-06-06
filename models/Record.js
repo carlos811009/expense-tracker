@@ -34,6 +34,12 @@ const RecordSchema = new Schema({
   },
   icon_name: {
     type: String,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+    required: true
   }
 })
 
