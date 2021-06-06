@@ -3,6 +3,8 @@ const port = 3000
 const app = express()
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
+const session = require('express-session')
+
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
 const db = require('./config/mongoose')
@@ -20,6 +22,12 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected')
 })
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(routes)
 
