@@ -4,6 +4,7 @@ const port = 3000
 const app = express()
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
+const flash = require('connect-flash')
 
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
@@ -27,10 +28,12 @@ app.use(express.static('public'))
 app.use(methodOverride('_method'))
 
 usePassport(app)
-
+app.use(flash())//注意要()
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
