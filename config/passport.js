@@ -1,6 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const User = require('../models/User')
+const User = require('../models/Users')
 
 module.exports = app => {
   app.use(passport.initialize())
