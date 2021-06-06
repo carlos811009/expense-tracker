@@ -5,11 +5,13 @@ const user = require('./modules/user')
 const expense = require('./modules/expenseUse')
 const methodOverride = require('method-override')
 const { authenticator } = require('../middleware/auth')//回傳的為物件
+const auth = require('./modules/auth')
 
 router.use(methodOverride('_method'))
 
 router.use('/expense', authenticator, expense)
 router.use('/users', user)
+router.use('/auth', auth)
 router.use('/', authenticator, home)
 
 module.exports = router
