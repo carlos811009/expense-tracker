@@ -59,7 +59,7 @@ router.use(express.urlencoded({ extended: true }))
 
 router.get('/', (req, res) => {
   const userId = req.user._id
-  Records.find({ userId })
+  Records.find({})
     .sort({ date: 'desc' })
     .lean()
     .then((records) => {
@@ -74,6 +74,7 @@ router.get('/', (req, res) => {
         .then(categories => {
           res.render('index', { records, category: categories, month })
         })
+        .catch(err => console.log(err))
 
     })
 })

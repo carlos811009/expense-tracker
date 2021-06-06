@@ -1,10 +1,14 @@
 const express = require('express')
 const session = require('express-session')
-const port = 3000
+const port = process.env.PORT || 3000
 const app = express()
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
@@ -16,7 +20,7 @@ app.set('view engine', "handlebars")
 
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

@@ -105,6 +105,7 @@ router.post('/search', (req, res) => {
   const searchMonth = Number(req.body.month)
   const userId = req.user._id
   let selectData = []
+  let error = ''
   Records.find({ userId })
     .lean()
     .then(records => {
@@ -121,9 +122,13 @@ router.post('/search', (req, res) => {
   Categories.find()
     .lean()
     .then(categories => {
-      res.render('index', { records: selectData, category: categories, month })
+      if (selectData.length === 0) {
+        error = '沒有相關資料,點擊私房錢返回'
+        return res.render('index', { records: selectData, category: categories, month, error })
+      } else {
+        return res.render('index', { records: selectData, category: categories, month })
+      }
     })
-
 })
 
 
