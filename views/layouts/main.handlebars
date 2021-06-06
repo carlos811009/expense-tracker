@@ -17,11 +17,14 @@
 
 <body class="dark">
   <nav class="navbar navbar-light nav-dark">
-    <a class="navbar-brand" href="/" style="font-display: none;color: white;">老爸的私房錢</a>
+    <a class="navbar-brand" href="/" style="font-display: none;color: white;">{{#if isAuthenticated}}{{
+      user.name}}的私房錢{{else}}私房錢{{/if}}</a>
     <div>
       <i class="far fa-moon"></i>
       <i class="far fa-sun"></i>
-      <a type=" button" class="btn btn-secondary">登出</a>
+      {{#if isAuthenticated}}
+      <a href="/users/logout" type=" button" class="btn btn-secondary">登出</a>
+      {{/if}}
     </div>
 
   </nav>
