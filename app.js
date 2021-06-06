@@ -7,13 +7,9 @@ const session = require('express-session')
 
 //使用const routes = require('./routes')的話也會自動去找到index
 const routes = require('./routes/index')
+
 const db = require('./config/mongoose')
 
-
-
-
-const Records = require('./models/Record')
-const Categories = require('./models/Category')
 
 db.on('error', () => {
   console.log('mongodb error')

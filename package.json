@@ -10,6 +10,8 @@
     "mongoose": "^5.12.10",
     "node": "^16.1.0",
     "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "router": "^1.3.5"
   },
   "name": "expense-tracker",
