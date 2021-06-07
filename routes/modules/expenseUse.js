@@ -1,7 +1,34 @@
 const express = require('express')
 const router = express.Router()
 const Records = require('../../models/Record')
-const Categories = require('../../models/Category')
+
+const categorySeedData = [
+  {
+    id: 0,
+    icon: 'fa-home',
+    name: "家居物業"
+  },
+  {
+    id: 1,
+    icon: 'fa-shuttle-van',
+    name: "交通出行"
+  },
+  {
+    id: 2,
+    icon: 'fa-grin-beam',
+    name: "休閒娛樂"
+  },
+  {
+    id: 3,
+    icon: 'fa-utensils',
+    name: "餐飲食品"
+  },
+  {
+    id: 4,
+    icon: 'fa-pen',
+    name: "其他"
+  }
+]
 const month = [
   {
     month: '1月',
@@ -58,26 +85,12 @@ router.get('/:id/edit', (req, res) => {
   const _id = req.params.id
   Records.findById({ _id })
     .lean()
-    .then((record) => {
-      Categories.find()
-        .lean()
-        .then(categories => {
-          res.render('edit', { record, category: categories })
-        })
-
-    })
+    .then((record) => res.render('edit', { record, category: categorySeedData }))
     .catch(err => console.log(err))
-
 })
-
 router.get('/add', (req, res) => {
   const time = new Date
-  Categories.find()
-    .lean()
-    .then(categories => {
-      res.render('create', { category: categories, time })
-    })
-
+  res.render('create', { category: categorySeedData, time })
 })
 
 router.post('/add', (req, res) => {
@@ -90,14 +103,14 @@ router.post('/add', (req, res) => {
   if (!location) {
     location = ''
   }
-  Categories.findOne({ id })
-    .then(category => {
-      const icon = category.icon
+  categorySeedData.forEach(category => {
+    const icon = category.icon
+    if (category.id === id) {
       Records.create({ amount, date, item, icon_id, icon, location, userId })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
-
-    })
+    }
+  })
 })
 
 router.post('/search', (req, res) => {
@@ -113,22 +126,20 @@ router.post('/search', (req, res) => {
         if (searchMonth) {
           return Number(record.date.slice(5, 7)) - Number(searchMonth) === 0
         }
-        if (searchCategory) {
+        if (searchCategory || searchCategory === 0) {
           return Number(record.icon_id) - Number(searchCategory) === 0
         }
       })
     })
-    .catch(err => console.log(err))
-  Categories.find()
-    .lean()
-    .then(categories => {
+    .then((records) => {
       if (selectData.length === 0) {
         error = '沒有相關資料,點擊私房錢返回'
-        return res.render('index', { records: selectData, category: categories, month, error })
+        return res.render('index', { records: selectData, category: categorySeedData, month, error })
       } else {
-        return res.render('index', { records: selectData, category: categories, month })
+        return res.render('index', { records: selectData, category: categorySeedData, month })
       }
     })
+    .catch(err => console.log(err))
 })
 
 
@@ -140,9 +151,9 @@ router.put('/:id', (req, res) => {
   const id = icon_id
   const _id = req.params.id
   const date = String(meeting_time)
-  Categories.findOne({ id })
-    .then(category => {
-      const icon = category.icon
+  categorySeedData.forEach(category => {
+    const icon = category.icon
+    if (category.id === id) {
       Records.findById(_id)
         .then(record => {
           record.amount = amount
@@ -155,9 +166,10 @@ router.put('/:id', (req, res) => {
           }
           record.save()
         })
+        .then(() => res.redirect('/'))
         .catch(err => console.log(err))
-    })
-    .then(() => res.redirect('/'))
+    }
+  })
 })
 
 router.delete('/:id', (req, res) => {
