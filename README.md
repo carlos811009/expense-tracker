@@ -41,21 +41,21 @@
 
 # 使用方式
 
-### 下載檔案
+## 下載檔案
 - git clone https://github.com/carlos811009/ExpenseTracker.git
 
-### 使用Terminal進入資料夾
+## 使用Terminal進入資料夾
 
-### 安裝 method-override
+## 安裝 method-override
 npm install method-override
 
-### 設定環境變數
+## 設定環境變數
 請參照檔案.env.example
 
-### 執行主程式
+## 執行主程式
 npm ruin dev
 
-### 開啟瀏覽器
+## 開啟瀏覽器
 localhost:3000
 
 
