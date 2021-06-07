@@ -26,6 +26,7 @@ app.use(session({
 
 
 app.use(express.urlencoded({ extended: true }))
+
 //要連結本地css一定要設定這個，此外已經設定為public資料夾，所以路徑從/stylesheets開始即可
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
