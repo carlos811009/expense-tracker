@@ -131,7 +131,7 @@ router.post('/search', (req, res) => {
         }
       })
     })
-    .then((records) => {
+    .then(() => {
       if (selectData.length === 0) {
         error = '沒有相關資料,點擊私房錢返回'
         return res.render('index', { records: selectData, category: categorySeedData, month, error })
