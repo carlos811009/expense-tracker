@@ -11,7 +11,9 @@ router.use(methodOverride('_method'))
 
 router.use('/expense', authenticator, expense)
 router.use('/users', user)
-router.use('auth', auth)
+router.use('/auth', auth)
 router.use('/', authenticator, home)
 
 module.exports = router
+
+
