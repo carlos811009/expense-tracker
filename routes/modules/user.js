@@ -21,8 +21,10 @@ router.get('/logout', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', {
+  badRequestMessage: 'Please fill in the the email and password',
   successRedirect: '/',
-  failureRedirect: '/users/login'
+  failureRedirect: '/users/login',
+  failureFlash: true
 }))
 
 router.post('/register', (req, res) => {
