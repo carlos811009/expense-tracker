@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
 const port = process.env.PORT
 
 //使用const routes = require('./routes')的話也會自動去找到index

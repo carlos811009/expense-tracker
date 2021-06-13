@@ -30,30 +30,33 @@ router.post('/login', passport.authenticate('local', {
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
+  console.log('1111')
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: '所有欄位都是必填。' })
+  }
+  if (password !== confirmPassword) {
+    errors.push({ message: '密碼與確認密碼不相符！' })
+  }
+  if (errors.length) {
+    console.log('222')
+    return res.render('register', {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword
+    })
   }
   User.findOne({ email })
     .then(user => {
       if (user) {
         errors.push({ message: '這個 Email 已經註冊過了。' })
-        if (password !== confirmPassword) {
-          errors.push({ message: '密碼與確認密碼不相符！' })
-        }
-        if (errors.length) {
-          return res.render('register', {
-            errors,
-            name,
-            email,
-            password,
-            confirmPassword
-          })
-        }
       } else {
         bcrypt
           .genSalt(10)
           .then(salt => bcrypt.hash(password, salt))
           .then(hash => {
+            console.log('333')
             return User.create({
               name,
               email,

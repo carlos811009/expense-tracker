@@ -85,7 +85,7 @@ db.once('open', () => {
       setTimeout(() => {
         console.log('done')
         process.exit()
-      }, 700)
+      }, 1000)
     })
     .catch(err => console.log(err))
 })
