@@ -5,27 +5,27 @@ const Records = require('../../models/Record')
 const categorySeedData = [
   {
     id: 0,
-    icon: 'fa-home',
+    category: 'fa-home',
     name: "家居物業"
   },
   {
     id: 1,
-    icon: 'fa-shuttle-van',
+    category: 'fa-shuttle-van',
     name: "交通出行"
   },
   {
     id: 2,
-    icon: 'fa-grin-beam',
+    category: 'fa-grin-beam',
     name: "休閒娛樂"
   },
   {
     id: 3,
-    icon: 'fa-utensils',
+    category: 'fa-utensils',
     name: "餐飲食品"
   },
   {
     id: 4,
-    icon: 'fa-pen',
+    category: 'fa-pen',
     name: "其他"
   }
 ]
@@ -94,19 +94,21 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-  let { amount, meeting_time, item, category, location
+  let { amount, date, name, category, location
   } = req.body
   const icon_id = Number(category)
   const id = icon_id
-  const date = String(meeting_time)
+  date = String(date)
   const userId = req.user._id
   if (!location) {
     location = ''
   }
-  categorySeedData.forEach(category => {
-    const icon = category.icon
-    if (category.id === id) {
-      Records.create({ amount, date, item, icon_id, icon, location, userId })
+  categorySeedData.forEach(each => {
+    const category_id = each.id
+    const category = each.category
+    console.log(each)
+    if (each.id === id) {
+      Records.create({ amount, date, name, category_id, category, location, userId })
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
     }
@@ -127,7 +129,7 @@ router.post('/search', (req, res) => {
           return Number(record.date.slice(5, 7)) - Number(searchMonth) === 0
         }
         if (searchCategory || searchCategory === 0) {
-          return Number(record.icon_id) - Number(searchCategory) === 0
+          return Number(record.category_id) - Number(searchCategory) === 0
         }
       })
     })
@@ -136,6 +138,12 @@ router.post('/search', (req, res) => {
         error = '沒有相關資料,點擊私房錢返回'
         return res.render('index', { records: selectData, category: categorySeedData, month, error })
       } else {
+        let i = 0
+        selectData.forEach(each => {
+          let indexBoolean = i % 2 === 0
+          each.indexBoolean = indexBoolean
+          i++
+        })
         return res.render('index', { records: selectData, category: categorySeedData, month })
       }
     })

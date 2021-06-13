@@ -12,40 +12,40 @@ const SEED_USER = {
 
 const recordSeedData = [
   {
-    icon_id: 0,
-    icon: 'fa-home',
-    item: "日常用品",
+    category_id: 0,
+    category: 'fa-home',
+    name: "日常用品",
     date: "2021-06-05T22:21",
     amount: 60,
     location: "全聯"
   },
   {
-    icon_id: 1,
-    item: '午餐',
-    icon: 'fa-utensils',
+    category_id: 1,
+    name: '午餐',
+    category: 'fa-utensils',
     date: "2021-06-04T22:21",
     amount: 60,
     location: "全聯"
   },
   {
-    icon_id: 2,
-    item: '火車',
-    icon: 'fa-shuttle-van',
+    category_id: 2,
+    name: '火車',
+    category: 'fa-shuttle-van',
     date: "2021-06-03T22:21",
     amount: 60,
     location: "彰化"
   },
   {
-    icon_id: 3,
-    item: '看電影',
-    icon: 'fa-grin-beam',
+    category_id: 3,
+    name: '看電影',
+    category: 'fa-grin-beam',
     date: "2021-06-02T22:21",
     amount: 120,
   },
   {
-    icon_id: 4,
-    item: '雜記',
-    icon: 'fa-pen',
+    category_id: 4,
+    name: '雜記',
+    category: 'fa-pen',
     date: "2021-06-01T22:21",
     amount: 60,
   },
@@ -72,8 +72,8 @@ db.once('open', () => {
     .then(user => {
       let userId = user.id
       recordSeedData.forEach(each => {
-        const { amount, date, item, icon_id, icon, location } = each
-        Records.create({ amount, date, item, icon_id, icon, location, userId })
+        const { amount, date, name, category_id, category, location } = each
+        Records.create({ amount, date, name, category_id, category, location, userId })
           .then(() => {
             console.log('ok')
           })

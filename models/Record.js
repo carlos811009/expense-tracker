@@ -7,14 +7,14 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const RecordSchema = new Schema({
-  icon_id: {
+  category_id: {
     type: Number,
     required: true
   },
-  icon: {
+  category: {
     type: String
   },
-  item: {
+  name: {
     type: String,
     required: true
   },
@@ -32,7 +32,7 @@ const RecordSchema = new Schema({
   location: {
     type: String,
   },
-  icon_name: {
+  category_name: {
     type: String,
   },
   userId: {
