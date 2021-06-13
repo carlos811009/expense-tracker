@@ -2,11 +2,15 @@ const express = require('express')
 const session = require('cookie-session')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
+
 const flash = require('connect-flash')
+const app = express()
+
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
 
 const port = process.env.PORT
 
@@ -14,7 +18,6 @@ const port = process.env.PORT
 const routes = require('./routes/index')
 const usePassport = require('./config/passport')
 require('./config/mongoose')
-const app = express()
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', "handlebars")

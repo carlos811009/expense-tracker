@@ -30,7 +30,6 @@ router.post('/login', passport.authenticate('local', {
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
-  console.log('1111')
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: '所有欄位都是必填。' })
   }
@@ -38,7 +37,6 @@ router.post('/register', (req, res) => {
     errors.push({ message: '密碼與確認密碼不相符！' })
   }
   if (errors.length) {
-    console.log('222')
     return res.render('register', {
       errors,
       name,
@@ -56,7 +54,6 @@ router.post('/register', (req, res) => {
           .genSalt(10)
           .then(salt => bcrypt.hash(password, salt))
           .then(hash => {
-            console.log('333')
             return User.create({
               name,
               email,
