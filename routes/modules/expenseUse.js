@@ -4,27 +4,27 @@ const Records = require('../../models/Record')
 
 const categorySeedData = [
   {
-    id: 0,
+    id: 1,
     category: 'fa-home',
     name: "家居物業"
   },
   {
-    id: 1,
+    id: 2,
     category: 'fa-shuttle-van',
     name: "交通出行"
   },
   {
-    id: 2,
+    id: 3,
     category: 'fa-grin-beam',
     name: "休閒娛樂"
   },
   {
-    id: 3,
+    id: 4,
     category: 'fa-utensils',
     name: "餐飲食品"
   },
   {
-    id: 4,
+    id: 5,
     category: 'fa-pen',
     name: "其他"
   }
@@ -85,7 +85,9 @@ router.get('/:id/edit', (req, res) => {
   const _id = req.params.id
   Records.findById({ _id })
     .lean()
-    .then((record) => res.render('edit', { record, category: categorySeedData }))
+    .then((record) => {
+      res.render('edit', { record, category: categorySeedData, })
+    })
     .catch(err => console.log(err))
 })
 router.get('/add', (req, res) => {
@@ -96,31 +98,35 @@ router.get('/add', (req, res) => {
 router.post('/add', (req, res) => {
   let { amount, date, name, category, location
   } = req.body
-  const icon_id = Number(category)
-  const id = icon_id
+  const categorySeed = categorySeedData.filter(each => each.id === Number(category))
   date = String(date)
   const userId = req.user._id
   if (!location) {
     location = ''
   }
-  categorySeedData.forEach(each => {
-    const category_id = each.id
-    const category = each.category
-    console.log(each)
-    if (each.id === id) {
-      Records.create({ amount, date, name, category_id, category, location, userId })
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err))
-    }
+  Records.create({
+    amount,
+    date,
+    name,
+    category_id: categorySeed[0].id,
+    category: categorySeed[0].category,
+    category_name: categorySeed[0].name,
+    location,
+    userId
   })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+
 })
 
-router.post('/search', (req, res) => {
-  const searchCategory = Number(req.body.category)
-  const searchMonth = Number(req.body.month)
+router.get('/search', (req, res) => {
+  const searchCategory = Number(req.query.category)
+  const searchMonth = Number(req.query.month)
+  const selectMonth = month.filter(each => each.id === searchMonth)[0]
+  const selectCategory = categorySeedData.filter(each => each.id === searchCategory)[0]
   const userId = req.user._id
-  let selectData = []
   let error = ''
+  if (!selectMonth && !selectCategory) { return res.redirect('/') }
   Records.find({ userId })
     .lean()
     .then(records => {
@@ -136,7 +142,7 @@ router.post('/search', (req, res) => {
     .then(() => {
       if (selectData.length === 0) {
         error = '沒有相關資料,點擊私房錢返回'
-        return res.render('index', { records: selectData, category: categorySeedData, month, error })
+        return res.render('index', { records: selectData, category: categorySeedData, month, error, selectMonth, selectCategory })
       } else {
         let i = 0
         selectData.forEach(each => {
@@ -144,7 +150,7 @@ router.post('/search', (req, res) => {
           each.indexBoolean = indexBoolean
           i++
         })
-        return res.render('index', { records: selectData, category: categorySeedData, month })
+        return res.render('index', { records: selectData, category: categorySeedData, month, selectMonth, selectCategory })
       }
     })
     .catch(err => console.log(err))
@@ -154,30 +160,27 @@ router.post('/search', (req, res) => {
 router.put('/:id', (req, res) => {
   let { amount, meeting_time, item, category, location
   } = req.body
+  const categorySeed = categorySeedData.filter(each => each.id === Number(category))
   amount = Number(amount)
   const icon_id = Number(category)
   const id = icon_id
   const _id = req.params.id
   const date = String(meeting_time)
-  categorySeedData.forEach(category => {
-    const icon = category.icon
-    if (category.id === id) {
-      Records.findById(_id)
-        .then(record => {
-          record.amount = amount
-          record.date = date
-          record.icon_id = icon_id
-          record.icon = icon
-          record.item = item
-          if (location) {
-            record.location = location
-          }
-          record.save()
-        })
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err))
-    }
-  })
+  Records.findById(_id)
+    .then(record => {
+      record.amount = amount
+      record.date = date
+      record.category_id = categorySeed[0].id
+      record.category = categorySeed[0].category
+      record.name = item
+      record.category_name = categorySeed[0].name
+      if (location) {
+        record.location = location
+      }
+      record.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
 
 router.delete('/:id', (req, res) => {

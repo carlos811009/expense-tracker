@@ -1,19 +1,26 @@
 <div class="card-container ">
   <div class="container">
     {{> message}}
-    <form action="/expense/search" class="group mt-3" method="POST">
+    <form action="/expense/search" class="group mt-3" method="get">
       <div class="form-group">
         <select class="form-control select_month" name="month" id="exampleFormControlSelect1" onchange="submit()">
+          {{#if selectMonth}}
+          <option value={{selectMonth.id}}>{{selectMonth.month}}</option>
+          {{/if}}
           <option value=''>月份</option>
           {{#each month}}
           <option value={{this.id}}>{{this.month}}</option>
-
           {{/each}}
         </select>
       </div>
       <div class="form-group">
         <select class="form-control select_category" id="exampleFormControlSelect1" name="category" onchange="submit()">
+          {{#if selectCategory}}
+          <option value={{selectCategory.id}}>{{selectCategory.name}}</option>
+          {{else}}
           <option value=''>類別</option>
+          {{/if}}
+
           {{#each category}}
           <option value={{this.id}}>{{this.name}}</option>
           {{/each}}
