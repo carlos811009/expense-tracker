@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Records = require('../../models/Record')
+const Categories = require('../../models/Category')
 
 const categorySeedData = [
   {
@@ -86,47 +87,66 @@ router.get('/:id/edit', (req, res) => {
   Records.findById({ _id })
     .lean()
     .then((record) => {
-      res.render('edit', { record, category: categorySeedData, })
+      Categories.find()
+        .lean()
+        .then((categories) => {
+          const category = categories.map(each => ({
+            name: each.name,
+            id: each.id,
+            isSelected: each.id === record.category_id
+          }))
+          res.render('edit', { record, category: category })
+        })
+        .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
 })
 router.get('/add', (req, res) => {
   const time = new Date
-  res.render('create', { category: categorySeedData, time })
+  Categories.find()
+    .lean()
+    .then(categoires => {
+      res.render('create', { category: categoires, time })
+    })
 })
-
 router.post('/add', (req, res) => {
   let { amount, date, name, category, location
   } = req.body
-  const categorySeed = categorySeedData.filter(each => each.id === Number(category))
-  date = String(date)
-  const userId = req.user._id
-  if (!location) {
-    location = ''
-  }
-  Records.create({
-    amount,
-    date,
-    name,
-    category_id: categorySeed[0].id,
-    category: categorySeed[0].category,
-    category_name: categorySeed[0].name,
-    location,
-    userId
-  })
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+  Categories.find({ id: Number(category) })
+    .lean()
+    .then(category => {
+      date = String(date)
+      const userId = req.user._id
+      if (!location) {
+        location = ''
+      }
+      Records.create({
+        amount,
+        date,
+        name,
+        category_id: category[0].id,
+        category: category[0].icon,
+        category_name: category[0].name,
+        location,
+        userId
+      })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+    })
+
 
 })
 
 router.get('/search', (req, res) => {
   const searchCategory = Number(req.query.category)
   const searchMonth = Number(req.query.month)
-  const selectMonth = month.filter(each => each.id === searchMonth)[0]
-  const selectCategory = categorySeedData.filter(each => each.id === searchCategory)[0]
   const userId = req.user._id
+  const selectCategory = categorySeedData.map(each => each.id === searchCategory)
+  const selectMonth = month.map(each => each.id === searchMonth)
+  console.log(selectMonth)
+  let selectData = ''
   let error = ''
-  if (!selectMonth && !selectCategory) { return res.redirect('/') }
+  if (!selectMonth && !selectCategory) { return res.redirect('back') }
   Records.find({ userId })
     .lean()
     .then(records => {
@@ -154,33 +174,38 @@ router.get('/search', (req, res) => {
       }
     })
     .catch(err => console.log(err))
-})
 
+})
 
 router.put('/:id', (req, res) => {
   let { amount, meeting_time, item, category, location
   } = req.body
-  const categorySeed = categorySeedData.filter(each => each.id === Number(category))
   amount = Number(amount)
   const icon_id = Number(category)
   const id = icon_id
   const _id = req.params.id
   const date = String(meeting_time)
-  Records.findById(_id)
-    .then(record => {
-      record.amount = amount
-      record.date = date
-      record.category_id = categorySeed[0].id
-      record.category = categorySeed[0].category
-      record.name = item
-      record.category_name = categorySeed[0].name
-      if (location) {
-        record.location = location
-      }
-      record.save()
+  Categories.find({ id: Number(category) })
+    .lean()
+    .then(category => {
+      Records.findById(_id)
+        .then(record => {
+          record.amount = amount
+          record.date = date
+          record.category_id = category[0].id
+          record.category = category[0].icon
+          record.name = item
+          record.category_name = category[0].name
+          if (location) {
+            record.location = location
+          }
+          record.save()
+        })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
     })
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+
+
 })
 
 router.delete('/:id', (req, res) => {

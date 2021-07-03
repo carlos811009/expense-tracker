@@ -11,14 +11,14 @@
       <label for="meeting-time" class="col-3">日期</label>
       <input type="datetime-local" id="meeting_time" name="meeting_time" value={{record.date}} required>
     </div>
-
     <div class=" form-group row">
       <label for="category" class="col-3 select-category ">類別</label>
       <select id="category" class="form-control col-9" name="category" aria-label="select example" required>
-        <option value={{record.category_id}}>{{record.category_name}}</option>
+        {{!-- <option value={{record.category_id}}>{{record.category_name}}</option> --}}
         {{#each category}}
-        <option value={{this.id}}>{{this.name}}</option>
+        <option value={{this.id}} {{#if this.isSelected}} selected {{/if}}>{{this.name}}</option>
         {{/each}}
+        {{!-- {{/each}} --}}
       </select>
     </div>
     <div class="form-group row">
