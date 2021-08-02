@@ -3,6 +3,8 @@
 # 測試網站
 https://exprence-tracker.herokuapp.com/users/login
 
+測試帳號：user1@example.com
+測試密碼：12345678
 
 
 ## 練習
